@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/components/ui/use-toast';
-import { MessageCircle } from 'lucide-react';
+import { MessageCircle, User, Lock } from 'lucide-react';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -21,11 +21,14 @@ const Login = () => {
     setIsLoading(true);
 
     try {
+      // Simulate login delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
       const success = await login(email, password);
       if (success) {
         toast({
-          title: "Success!",
-          description: "Logged in successfully",
+          title: "Welcome back!",
+          description: "You've successfully logged in",
         });
         navigate('/chat');
       } else {
@@ -51,62 +54,64 @@ const Login = () => {
       <div className="w-full max-w-md">
         <div className="text-center mb-8 animate-fade-in">
           <div className="flex items-center justify-center mb-4">
-            <div className="bg-textify-primary p-3 rounded-full">
+            <div className="bg-textify-primary p-3 rounded-full shadow-lg">
               <MessageCircle size={32} className="text-white" />
             </div>
           </div>
           <h1 className="text-3xl font-bold text-textify-dark">Textify</h1>
-          <p className="text-gray-500 mt-2">Connect with friends and family</p>
+          <p className="text-gray-600 mt-2">Your modern messaging platform</p>
         </div>
 
         <Card className="animate-bounce-in shadow-lg border-0">
-          <CardHeader>
-            <CardTitle className="text-2xl">Welcome back</CardTitle>
-            <CardDescription>Enter your credentials to access your account</CardDescription>
+          <CardHeader className="space-y-1">
+            <CardTitle className="text-2xl font-semibold text-center">Sign in</CardTitle>
+            <CardDescription className="text-center">
+              Enter your details to access your account
+            </CardDescription>
           </CardHeader>
           <form onSubmit={handleSubmit}>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-medium">
-                  Email
-                </label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="you@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="border-gray-300"
-                />
+                <div className="relative">
+                  <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="pl-10 border-gray-200"
+                  />
+                </div>
               </div>
               <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <label htmlFor="password" className="text-sm font-medium">
-                    Password
-                  </label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                  <Input
+                    id="password"
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="pl-10 border-gray-200"
+                  />
+                </div>
+                <div className="flex items-center justify-end">
                   <a href="#" className="text-sm text-textify-accent hover:underline">
                     Forgot password?
                   </a>
                 </div>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  className="border-gray-300"
-                />
               </div>
             </CardContent>
             <CardFooter className="flex-col gap-4">
               <Button type="submit" className="w-full bg-textify-primary hover:bg-textify-accent transition-colors" disabled={isLoading}>
                 {isLoading ? 'Signing in...' : 'Sign In'}
               </Button>
-              <p className="text-sm text-center text-gray-500">
+              <p className="text-sm text-center text-gray-600 mt-2">
                 Don't have an account?{' '}
-                <a href="#" className="text-textify-accent hover:underline">
+                <a href="#" className="text-textify-accent hover:underline font-medium">
                   Create one
                 </a>
               </p>

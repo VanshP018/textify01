@@ -9,20 +9,23 @@ const MessageList = ({ messages, currentUserId }) => {
         const isCurrentUser = message.sender === 'user';
         const isSystem = message.sender === 'system';
         
+        // Group messages by date
+        const messageDate = format(new Date(message.timestamp), 'MMMM d');
+        
         return (
           <div
             key={message.id}
             className={`flex ${isCurrentUser ? 'justify-end' : 'justify-start'} ${isSystem ? 'justify-center' : ''}`}
           >
             {!isCurrentUser && !isSystem && (
-              <Avatar className="mr-2">
+              <Avatar className="mr-2 mt-auto">
                 <AvatarImage src="/placeholder.svg" />
                 <AvatarFallback>OP</AvatarFallback>
               </Avatar>
             )}
             
             {isSystem ? (
-              <div className="bg-gray-100 text-gray-800 p-3 rounded-xl max-w-[80%] text-center animate-fade-in">
+              <div className="bg-gray-100 text-gray-800 px-4 py-2 rounded-xl max-w-[80%] text-center animate-fade-in shadow-sm">
                 <p>{message.text}</p>
               </div>
             ) : (
@@ -37,7 +40,7 @@ const MessageList = ({ messages, currentUserId }) => {
             )}
             
             {isCurrentUser && (
-              <Avatar className="ml-2">
+              <Avatar className="ml-2 mt-auto">
                 <AvatarImage src="/placeholder.svg" />
                 <AvatarFallback>YO</AvatarFallback>
               </Avatar>

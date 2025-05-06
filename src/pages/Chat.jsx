@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 import { useAuth } from '@/context/AuthContext';
-import { MessageCircle, Settings, Send, LogOut } from 'lucide-react';
+import { MessageCircle, Settings, Send, LogOut, Search } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import ChatSidebar from '@/components/ChatSidebar';
@@ -69,12 +69,23 @@ const Chat = () => {
     
     // Simulate a response after a short delay
     setTimeout(() => {
+      const responses = [
+        "Thanks for your message! This is a simulated response.",
+        "I appreciate your message. How can I help you today?",
+        "That's interesting! Tell me more about that.",
+        "Thanks for reaching out. Is there anything else you'd like to discuss?",
+        "Got it! Is there anything specific you want to know about this topic?"
+      ];
+      
+      const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+      
       const responseMessage = {
         id: (Date.now() + 1).toString(),
-        text: `Thanks for your message! This is a simulated response.`,
+        text: randomResponse,
         sender: 'other',
         timestamp: new Date().toISOString(),
       };
+      
       setMessages(prev => [...prev, responseMessage]);
     }, 1000);
   };
@@ -93,7 +104,7 @@ const Chat = () => {
     <div className="h-screen w-full flex bg-gray-50">
       {/* Sidebar */}
       {showSidebar && (
-        <div className="w-80 border-r border-gray-200 bg-white flex-shrink-0">
+        <div className="w-80 border-r border-gray-200 bg-white flex-shrink-0 shadow-sm">
           <ChatSidebar onLogout={handleLogout} />
         </div>
       )}
@@ -101,7 +112,7 @@ const Chat = () => {
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col">
         {/* Header */}
-        <header className="h-16 border-b border-gray-200 px-4 flex items-center justify-between bg-white">
+        <header className="h-16 border-b border-gray-200 px-4 flex items-center justify-between bg-white shadow-sm">
           <div className="flex items-center gap-3">
             <Button 
               variant="ghost" 
@@ -150,7 +161,7 @@ const Chat = () => {
               onChange={(e) => setMessage(e.target.value)}
               className="flex-1"
             />
-            <Button type="submit" className="bg-textify-primary hover:bg-textify-accent flex gap-2 items-center">
+            <Button type="submit" className="bg-textify-primary hover:bg-textify-accent transition-colors flex gap-2 items-center">
               <Send size={18} />
               <span className="hidden sm:inline">Send</span>
             </Button>
