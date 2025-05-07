@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -66,28 +65,6 @@ const Chat = () => {
     
     setMessages([...messages, newMessage]);
     setMessage('');
-    
-    // Simulate a response after a short delay
-    setTimeout(() => {
-      const responses = [
-        "Thanks for your message! This is a simulated response.",
-        "I appreciate your message. How can I help you today?",
-        "That's interesting! Tell me more about that.",
-        "Thanks for reaching out. Is there anything else you'd like to discuss?",
-        "Got it! Is there anything specific you want to know about this topic?"
-      ];
-      
-      const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-      
-      const responseMessage = {
-        id: (Date.now() + 1).toString(),
-        text: randomResponse,
-        sender: 'other',
-        timestamp: new Date().toISOString(),
-      };
-      
-      setMessages(prev => [...prev, responseMessage]);
-    }, 1000);
   };
 
   const handleLogout = () => {
